@@ -98,7 +98,7 @@ void setup() {
   // Set GSM module baud rate and UART pins
   SerialAT.begin(115200, SERIAL_8N1, MODEM_RX, MODEM_TX);
   delay(3000);
-
+  
   // Restart SIM800 module, it takes quite some time
   // To skip it, call init() instead of restart()
   SerialMon.println("Initializing modem...");
@@ -171,6 +171,15 @@ void loop() {
 // ACCIDENT -----------------------------------------------------------
  if(digitalRead(tiltPin) == LOW || digitalRead(impactPin) == LOW){
     digitalWrite(buzzerPin,HIGH);
+    digitalWrite(in1, LOW);
+    digitalWrite(in2, LOW);
+    digitalWrite(LEDPin, LOW);
+    lcd.clear();
+    lcd. setCursor (0, 0);
+    lcd.print("TEAM BIT BY BIT");
+    lcd. setCursor (0, 1);
+    lcd.print("ACCIDENT OCCURED");
+    
     if(modem.sendSMS(SMS_TARGET, smsMessage)){
       SerialMon.println(smsMessage);
     } 
